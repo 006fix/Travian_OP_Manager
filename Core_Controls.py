@@ -3,21 +3,30 @@ import math
 def distance_normaliser(c1, c2, map_size=200):
     # takes just single pair of coordinates, doesn't really matter which one they are
     # also technically takes map size, defaulting to 200
+    #just to make life simpler, we're going to add 200 to each value (no negative numbers)
+    c1 += 200
+    c2 += 200
+    map_size += map_size
 
-    if ((c1 > 0) & (c2 < 0)) or ((c1 < 0) & (c2 > 0)):
-        sign_imbalance = True
+    if c1 > c2:
+        t1 = True
     else:
-        sign_imbalance = False
-    #print(sign_imbalance)
+        t1 = False
 
-    if sign_imbalance:
-        #EW HOW DOES THIS WORK???????
-        new_dist =
-        c2 = c2*-1
-        mod = 1
+    #derive distance in both possible directions, select smallest one
+    if t1:
+        v1 = c1-c2
     else:
-        mod=0
-    distance = abs(c1-c2) + mod
+        v1 = c2-c1
+    #this should be the direction that involves zero looping over the map
+    #now try the other direction
+    if t1:
+        var = map_size - c1
+        v2 = var + c2 + 1 #add one for looping over 0 axis
+    else:
+        var = map_size - c2
+        v2 = var + c1 + 1
+    distance = min(v1, v2)
 
     return distance
 
@@ -32,7 +41,7 @@ def distance_calc(x1, x2, y1, y2 ,ts , arti_mod):
 
     x_dist = distance_normaliser(x1, x2)
     y_dist = distance_normaliser(y1, y2)
-    print(x_dist,y_dist)
+    print(f' x, y dists are {x_dist} , {y_dist}')
     x_dist = x_dist **2
     y_dist = y_dist **2
     true_dist = math.sqrt((x_dist+y_dist))
@@ -48,7 +57,6 @@ def basic_test():
     print(t3)
     t4 = distance_calc(19, 19, 194, -200, 20, 0)
     print(t4)
-#basic_test()
-t5 = distance_calc(19,-37,194,-184,20,0)
-print(t5)
+    t5 = distance_calc(20, -33, 194, -190, 20, 0)
+    print(t5)
 
