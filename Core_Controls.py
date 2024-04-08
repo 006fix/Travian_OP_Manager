@@ -74,7 +74,7 @@ def duration_calc(dist, ts, arti):
     return dur
 
 def basic_test2():
-    #passed
+    #passed, provisionally
     t1 = distance_calc(19,20,194,194)
     d1 = duration_calc(t1, 0, 1)
     print(t1)
